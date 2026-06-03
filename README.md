@@ -9,7 +9,7 @@ A lightweight web utility designed for Ubuntu users to stream YouTube videos ins
 - **One-Click Local Server:** A Python automated script manages the local web server setup effortlessly.
 - **Privacy First:** The Python launcher automatically triggers your default Ubuntu browser to open the site in **Private / Incognito** mode.
 - **Auto-Cleanup:** The background server process terminates automatically when you close the terminal or press `Ctrl+C`.
-- **Desktop Integration:** Launch the app instantly with a dedicated desktop shortcut and custom icon.
+- **Automated Desktop Integration:** Create a fully working desktop shortcut with a single installation command.
 
 ## Getting Started
 
@@ -36,22 +36,24 @@ A lightweight web utility designed for Ubuntu users to stream YouTube videos ins
    ./start.sh
    ```
 
-### Desktop Shortcut Setup
+### Desktop Shortcut Setup (Automated)
 
-To launch the application directly from your Ubuntu desktop with a custom icon, follow these steps:
+You can easily generate a desktop shortcut with a custom icon that adapts automatically to your system paths.
 
-1. **Copy the shortcut to your desktop folder:**
+1. **Make the installer script executable:**
    ```bash
-   cp YoutubePlay.desktop ~/Desktop/
+   chmod +x install.sh
    ```
 
-2. **Make the shortcut executable:**
+2. **Run the installer:**
    ```bash
-   chmod +x ~/Desktop/YoutubePlay.desktop
+   ./install.sh
    ```
 
-3. **Enable the launcher:**
-   Go to your desktop, right-click on the `YoutubePlay.desktop` icon, and select **"Allow Launching"**. The default system launcher icon will instantly change to your custom `icon.png`.
+3. **Enable the shortcut on Ubuntu:**
+   Go to your Desktop, **right-click** on the newly created `YoutubePlay` icon, and select **"Allow Launching"**. 
+   
+The generic launcher icon will instantly transform into your custom `icon.png`, and you can now launch the app with a simple double-click.
 
 ## How It Works (Under the Hood)
 
