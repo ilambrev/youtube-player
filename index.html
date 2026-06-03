@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" href="data:,">
+    <title>Youtube without ads</title>
+</head>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background-color: #313030;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+        width: 100%;
+        background-color: #234465;
+        text-align: center;
+        color: lightgray;
+        padding: 10px;
+        margin-bottom: 5px;
+    }
+
+    #title {
+        color: #c8cfcd;
+        padding: 10px 0 0 10px;
+    }
+
+    span {
+        color: #ff0000;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    #video-url {
+        color: #c8cfcd;
+    }
+
+    #video-url input {
+        height: 20px;
+        width: 330px;
+    }
+</style>
+
+<body>
+    <header>
+        <h1>Watch <span>YouTube</span> videos without annoying ads</h1>
+    </header>
+
+    <form id="video-url" action="">
+        <label for="url">YouTube video URL: </label>
+        <input type="text" id="url" name="url" placeholder="https://www.youtube.com/watch?v=Xdg%emN0PNb">
+        <button type="submit">Load</button>
+    </form>
+
+    <main>
+        <div id="video-frame">
+            <iframe src="frame-image.png" name="video-frame" title="video-frame" width="1024" height="576" frameborder="0"></iframe>
+        </div>
+    </main>
+
+    <div id="title"></div>
+
+    <script>
+        const videoFrame = document.querySelector('#video-frame');
+        const videoUrl = document.querySelector('#video-url');
+        const currentTitle = document.querySelector('#title');
+        const loadButton = document.querySelector('#video-url button');
+
+        loadButton.addEventListener('click', (e) => showMovie(e));
+
+        let currentLink = '';
+
+        async function showMovie(e) {
+            console.trace()
+            e.preventDefault();
+            
+            currentTitle.textContent = ""
+
+            const urlInput = e.target.parentElement.querySelector('#url');
+            const videoUrl = urlInput.value.trim();
+
+            const embededUrl = videoUrl.replace('watch?v=', 'embed/');
+            const videoData = await getVideoData(videoUrl);
+
+            const frameData = `<iframe width="1024" height="576" src="${embededUrl}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+
+            videoFrame.innerHTML = frameData;
+            
+            const authorParagraph = document.createElement('p');
+            authorParagraph.textContent = `Author: ${videoData.author_name}`;
+            
+            const titleParagraph = document.createElement('p');
+            titleParagraph.textContent = `Title: ${videoData.title}`;
+            
+            currentTitle.appendChild(authorParagraph);
+            currentTitle.appendChild(titleParagraph);
+
+            urlInput.value = '';
+        }
+
+        //Youtube API https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=ISWwr3pVTZc&format=json
+
+        async function getVideoData(videoUrl) {
+            const response = await fetch('https://www.youtube.com/oembed?url=' + videoUrl + '&format=json');
+            const data = await response.json();
+
+            return data;
+        }
+
+    </script>
+
+</body>
+
+</html>
